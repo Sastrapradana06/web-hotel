@@ -102,13 +102,18 @@
 .card .card_kamar {
   width: 300px;
   max-height: max-content;
-  /* border: 1px solid red; */
+  cursor: pointer;
   padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 5px;
   box-shadow: 5px 8px 20px rgba(149, 148, 148, 0.2);
   background-color: rgb(19, 18, 18);
+}
+
+.card_kamar:hover {
+  transform: scale(1.1);
+  transition: all .3s;
 }
 
 .card_kamar img {

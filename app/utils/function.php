@@ -35,6 +35,19 @@
     return $conn;
   }
 
+  function getKamar() {
+    $conn = connectDb();
+
+    $query = "SELECT * FROM kamar_hotel";
+    $result = mysqli_query($conn,$query);
+    $data = array();
+
+    while ($row = $result->fetch_assoc()) {
+      $data[] = $row;;
+    }
+    return $data;
+  }
+
   function checkInKamar($id, $username, $email, $jenisKamar, $durasiMenginap, $imgKamar, $subtotal) {
     
     $query = "INSERT INTO check_in (id, username, email, jenis_kamar, durasi_menginap, img_kamar, subtotal) 

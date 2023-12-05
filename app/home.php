@@ -1,4 +1,9 @@
+<?php
+require './utils/function.php';
+$kamarHotel = getKamar();
+// var_dump($kamarHotel);
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,46 +35,29 @@
           <p>Kamar Mewah Dengan Harga Terjangkau</p>
         </div>
       </div>
-      <div class="card" id="card"></div>
+      <div class="card" id="card">
+        <?php foreach ($kamarHotel as $kamar) : ?>
+          <div class="card_kamar">
+            <img src="<?= $kamar['image']; ?>" alt="" />
+            <div class="name_kamar">
+              <p><?= $kamar['tipe_kamar']; ?></p>
+              <div class="star">
+                <span class="material-symbols-outlined">star_rate</span>
+                <span class="material-symbols-outlined">star_rate</span>
+                <span class="material-symbols-outlined">star_rate</span>
+                <span class="material-symbols-outlined">star_rate</span>
+                <span class="material-symbols-outlined">star_rate</span>
+              </div>
+            </div>
+            <p class="price">Rp.<?= $kamar['price']; ?><span>/Per Night</span></p>
+            <button onclick="checkInKamar(`<?= htmlspecialchars(json_encode($kamar), ENT_QUOTES, 'UTF-8'); ?>`)">
+              Booking Now
+            </button>
+          </div>
+        <?php endforeach; ?>
+      </div>
     </div>
     <div class="pop_up" id="pop_up">
-      <!-- <form action="" class="form">
-        <div class="username">
-          <label for="">Masukkan Username</label>
-          <input type="text" id="username" name="username">
-        </div>
-        <div class="email">
-          <label for="">Masukkan Email</label>
-          <input type="email" id="email" name="email">
-        </div>
-        <div class="username">
-          <label for="">Berapa Hari Anda Menginap?</label>
-          <input type="number" id="total_hari" name="total_hari" placeholder="1/2">
-        </div>
-        <div class="email">
-          <label for="">Jenis Kamar</label>
-          <input type="text" id="jenis_kamar" name="jenis_kamar" value="Presidential Suite" disabled>
-        </div>
-        <div class="email">
-          <label for="">Harga</label>
-          <input type="text" id="harga" name="harga" value="5.000.000/malam" disabled>
-        </div>
-        <button>Bayar Kamar</button>
-        <button id="btn_close">Close</button>
-      </form> -->
-      <!-- <div class="card_harga">
-        <div class="title">
-          <p>Detail Pesanan</p>
-        </div>
-        <div class="deskripsi">
-          <p>Durasi Menginap: <span>1 Hari</span></p>
-          <p>Detail Menginap: <span>16 November - 17 November</span></p>
-          <p>Subtotal Biaya Menginap: <span>1 Hari</span></p>
-        </div>
-        <button>
-          <a href="">Oke</a>
-        </button>
-      </div> -->
     </div>
   </section>
 
@@ -77,44 +65,16 @@
   <script>
     const card = document.getElementById('card')
     const popUp = document.getElementById('pop_up')
-    const arrKamar = [{
-        img: './img/supaer_vip2.jfif',
-        tipekamar: 'Presidential Suite',
-        price: 5000000
-      },
-      {
-        img: './img/Honeymoon Suite.jfif',
-        tipekamar: 'Honeymoon Suite',
-        price: 3000000
-      },
-      {
-        img: './img/Penthouse.jfif',
-        tipekamar: 'Penthouse',
-        price: 4000000
-      },
-      {
-        img: './img/Deluxe Room.jfif',
-        tipekamar: 'Deluxe Room',
-        price: 3000000
-      },
-      {
-        img: './img/Standard Room.jfif',
-        tipekamar: 'Standard Room',
-        price: 1000000
-      },
-      {
-        img: './img/Suite Room.jfif',
-        tipekamar: 'Suite Room',
-        price: 1000000
-      },
-    ]
-    popUp.classList.remove('pop_up')
 
+    popUp.classList.remove('pop_up')
+    
+    // fungsi untuk menghilangkan element detail pesanan
     function checkInSucces() {
       popUp.innerHTML = ''
       popUp.classList.remove('pop_up')
     }
 
+    // fungsi untuk mengambil waktu sekarang
     function getDate() {
       const event = new Date();
       const next24HoursDate = new Date(event.getTime() + 24 * 60 * 60 * 1000);
@@ -126,6 +86,7 @@
       return event.toLocaleDateString("id-ID", options)
     }
 
+    // fungsi untuk mengambil waktu kedepannya
     function getFutureDate(days) {
       const currentDate = new Date();
 
@@ -141,19 +102,29 @@
       return futureDate.toLocaleDateString("id-ID", options);
     }
 
+    // fungsi untuk menghilangkan element form
     function closeForm() {
       popUp.classList.remove('pop_up')
       popUp.innerHTML = ''
     }
 
+    // fungsi checkIn ketika user klik button booking now
+    function checkInKamar(data) {
+    // data di parse supaya bisa di akses
+      const kamarData = JSON.parse(data);
+      const {
+        tipe_kamar,
+        image,
+        price
+      } = kamarData
 
-    const checkIn = (jenisKamar, price) => {
-      console.log(jenisKamar, price);
+      //  Membuat format mata uang ke mata uang indonesia
       let totalHarga = price
       let formattedPrice = totalHarga.toLocaleString('id-ID');
       popUp.className = 'pop_up'
 
-      // + form
+
+      //  Menampilakan form pemesanan kamar hotel
       popUp.innerHTML +=
         (`<div class="pop_up">
           <form action="home.php" method="POST" class="form" id="bookingForm">
@@ -171,7 +142,7 @@
             </div>
             <div class="email">
               <label for="">Jenis Kamar</label>
-              <input type="text" id="jenis_kamar" name="jenis_kamar" value=${jenisKamar} disabled>
+              <input type="text" id="jenis_kamar" name="jenis_kamar" value=${tipe_kamar} disabled>
             </div>
             <div class="email">
               <label for="">Harga</label>
@@ -184,41 +155,41 @@
       `)
       // + End form
 
+      //  ambil elemen form sesuai id yang sudah diberikan
       const bookingForm = document.getElementById('bookingForm')
+      //  ketika form di submit jalankan function dibawah
       bookingForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const usernameValue = document.getElementById('username').value;
         const emailValue = document.getElementById('email').value;
         const totalHariValue = document.getElementById('total_hari').value;
-        const jenisKamar = document.getElementById('jenis_kamar').value
 
+        //  validasi jika total hari kurang dari 1 maka langsung dihentikan disini dan tidak menjalankan code dibawahnya 
         if (totalHariValue < 1) {
           alert('Input Kamar tidak valid')
           return
         }
 
-        const filterKamar = arrKamar.filter((item) => {
-          return item.tipekamar.includes(jenisKamar)
-        })
-        const imgKamar = filterKamar[0].img
-
+        // ambil tanggal sekarang dan tanggal selanjutnya sesuai berapa lama user menginap.
         const dateNow = getDate()
         const futureDate = getFutureDate(parseFloat(totalHariValue))
-
-
         const subtotal = parseFloat(totalHarga * totalHariValue)
         const formattedSubtotal = subtotal.toLocaleString('id-ID');
 
+        // membuat object yang berisi data yang user inputkan di form diatas yang akan di kirimkan ke server 
         const dataToServer = {
           username: usernameValue,
           email: emailValue,
-          jenisKamar,
-          imgKamar,
+          jenisKamar: tipe_kamar,
+          imgKamar: image,
           durasiMenginap: `${dateNow} - ${futureDate}`,
           subtotal
         }
+
+        // hilangkan element form karena sudah mendapatkan data pemesanan.
         popUp.innerHTML = ''
 
+        // menampilakan detail pemesanan kamar
         popUp.innerHTML = (
           `<div class="card_harga">
           <div class="title">
@@ -241,34 +212,6 @@
 
     }
 
-    card.innerHTML = arrKamar.map((item) => {
-      const formattedPrice = item.price.toLocaleString('id-ID');
-      const {
-        tipekamar,
-        price
-      } = item
-      // console.log(tipekamar);
-
-      return `
-        <div class="card_kamar">
-          <img src="${item.img}" alt=""/>
-          <div class="name_kamar">
-            <p>${item.tipekamar}</p>
-            <div class="star">
-              <span class="material-symbols-outlined">star_rate</span>
-              <span class="material-symbols-outlined">star_rate</span>
-              <span class="material-symbols-outlined">star_rate</span>
-              <span class="material-symbols-outlined">star_rate</span>
-              <span class="material-symbols-outlined">star_rate</span>
-            </div>
-          </div>
-          <p class="price">Rp ${formattedPrice}<span>/Per Night</span></p>
-          <button onclick="checkIn('${tipekamar}', ${price})">
-            Booking Now
-          </button>
-        </div>
-      `
-    });
   </script>
 </body>
 
