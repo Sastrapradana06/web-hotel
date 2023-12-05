@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit&family=Oswald:wght@500&family=Playpen+Sans:wght@500&family=Poppins&family=Roboto&family=Signika+Negative&family=Ubuntu&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  scroll-behavior: smooth;
+}
+
+#check_in {
+  width: 100%;
+  min-height: 100vh;
+  max-height: max-content;
+  border: 1px solid black;
+  background-color: rgb(33, 33, 33);
+  /* border: 1px solid red; */
+  background-position: -20px 0;
+  background-size: cover;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  /* filter: brightness(0.3);  */
+}
+
+#check_in .container_in {
+  position: relative;
+  width: 80%;
+  height: max-content;
+  margin: auto;
+  /* border: 1px solid red; */
+  padding: 5px;
+}
+
+#check_in .no_kamar {
+  color: salmon;
+}
+
+.container_in .nav_in {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: max-content;
+  /* border: 1px solid wheat; */
+  display: flex;
+  justify-content: center;
+}
+
+.nav_in .nav_container {
+  width: 70%;
+  padding: 15px 0;
+  /* border: 1px solid wheat; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav_in button {
+  padding: 5px 12px;
+  background-color: salmon;
+  /* border: 1px solid white; */
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all .4s;
+  /* color: white; */
+}
+
+.nav_in button:hover {
+  background-color: rgb(221, 102, 89);
+}
+
+.nav_container button a {
+  color: white;
+  text-decoration: none;
+}
+
+.check_in .container_in .deskripsi {
+  width: 100%;
+  height: max-content;
+  /* border: 1px solid white; */
+  margin-top: 50px;
+  color: white;
+  text-align: center;
+}
+
+.container_in .deskripsi h3 {
+  /* font-size: 1.1rem; */
+  text-transform: uppercase;
+}
+
+.deskripsi p {
+  font-size: .7rem;
+}
+
+
+.container_in .card {
+  width: 100%;
+  height: max-content;
+  /* border: 1px solid red; */
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.container_in .card .card_kamar {
+  padding: 10px;
+  width: 700px;
+  height: 200px;
+  /* border: 1px solid salmon; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.card_kamar .img_card img {
+  width: 350px;
+  height: 200px;
+  border: 2px solid orange;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.card_kamar .deskripsi_card {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  border: 2px solid salmon;
+  padding: 0 10px;
+  /* background-color: rgb(227, 226, 226); */
+  color: white;
+  border-radius: 10px;
+}
+
+.deskripsi_card button {
+  padding: 8px;
+  background-color: crimson;
+  border: 1px solid white;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.deskripsi_card button:hover {
+  background-color: rgb(173, 11, 43);
+  transition: all .3s;
+}
